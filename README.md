@@ -1,4 +1,4 @@
-# ClauseLens (Clausewise): Contract Document Intelligence Pipeline
+# Clausewise: Contract Document Intelligence Pipeline
 
 ClauseLens turns commercial contracts (text PDFs and scans) into validated, structured clause data, then measures how accurate and how expensive that extraction is.
 
