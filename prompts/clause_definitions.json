@@ -1,0 +1,14 @@
+{
+  "clauses": {
+    "Governing Law": "Which country, state, or jurisdiction's law governs the interpretation of the contract?",
+    "Termination for Convenience": "Can either party terminate without cause or breach simply by providing advance notice?",
+    "Cap on Liability": "Is there a ceiling, aggregate cap, or multiplier limiting a party's financial liability?",
+    "Audit Rights": "Does a party have the right to inspect, examine, or audit records, facilities, or books?",
+    "Non-Compete": "Is a party restricted from competing, soliciting clients, or hiring employees?",
+    "Exclusivity": "Does the contract grant exclusive rights, territory, or sole distributorship?",
+    "Anti-Assignment": "Is assignment or transfer of the contract prohibited or conditioned upon prior written consent?",
+    "Renewal Term": "Does the contract automatically renew or provide explicit renewal options?",
+    "Expiration Date": "What is the explicit end date or calendar expiration of the contract?",
+    "Effective Date": "What is the date on which the contract begins or takes legal effect?"
+  }
+}
