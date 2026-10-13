@@ -1,0 +1,173 @@
+{
+  "cuad-01": {
+    "title": "Northwind Logistics Master Services Agreement",
+    "batch": "tuning",
+    "filename": "cuad-01_tuning.txt",
+    "labels": {
+      "Governing Law": {
+        "present": true,
+        "value": "State of New York, USA",
+        "quote": "laws of the State of New York, USA"
+      },
+      "Termination for Convenience": {
+        "present": true,
+        "value": "Either party, 90 days prior written notice",
+        "quote": "Either party may terminate this Agreement without cause upon giving ninety (90) days prior written notice."
+      },
+      "Cap on Liability": {
+        "present": true,
+        "value": "Total fees paid during the prior 12 months",
+        "quote": "exceed the total fees paid by Customer during the prior 12 months"
+      },
+      "Audit Rights": {
+        "present": true,
+        "value": "Once per calendar year upon 30 days demand",
+        "quote": "Customer may audit Northwind's financial and performance records once per calendar year upon thirty (30) days prior written demand."
+      },
+      "Non-Compete": {
+        "present": true,
+        "value": "12 months non-solicit for freight personnel",
+        "quote": "for twelve (12) months thereafter, Customer shall not directly solicit Northwind's core freight logistics personnel"
+      },
+      "Exclusivity": {
+        "present": true,
+        "value": "Exclusive multimodal carrier",
+        "quote": "Northwind is appointed as Customer's exclusive multimodal carrier in the designated region."
+      },
+      "Anti-Assignment": {
+        "present": true,
+        "value": "Prior written consent required",
+        "quote": "Neither party may assign or transfer this Agreement or any rights without prior written consent of the other party."
+      },
+      "Renewal Term": {
+        "present": true,
+        "value": "Automatic 1 year renewal",
+        "quote": "renew automatically for successive periods of 1 year each"
+      },
+      "Expiration Date": {
+        "present": true,
+        "value": "31 December 2028",
+        "quote": "shall continue until 31 December 2028"
+      },
+      "Effective Date": {
+        "present": true,
+        "value": "January 15, 2024",
+        "quote": "Effective Date: January 15, 2024"
+      }
+    }
+  },
+  "cuad-02": {
+    "title": "Harbor Warehouse Lease Agreement",
+    "batch": "held_out",
+    "filename": "cuad-02_held_out.txt",
+    "labels": {
+      "Governing Law": {
+        "present": true,
+        "value": "Commonwealth of Massachusetts",
+        "quote": "laws of the Commonwealth of Massachusetts"
+      },
+      "Termination for Convenience": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Cap on Liability": {
+        "present": true,
+        "value": "Three months of Base Rent",
+        "quote": "capped at three (3) months of Base Rent"
+      },
+      "Audit Rights": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Non-Compete": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Exclusivity": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Anti-Assignment": {
+        "present": true,
+        "value": "Landlord express written consent required",
+        "quote": "without Landlord's express written consent"
+      },
+      "Renewal Term": {
+        "present": true,
+        "value": "One renewal of 2 years",
+        "quote": "one renewal of 2 years upon 180 days advance notice"
+      },
+      "Expiration Date": {
+        "present": true,
+        "value": "31 December 2029",
+        "quote": "expire on 31 December 2029"
+      },
+      "Effective Date": {
+        "present": true,
+        "value": "November 1, 2024",
+        "quote": "Effective as of November 1, 2024"
+      }
+    }
+  },
+  "cuad-03": {
+    "title": "Pacific Rim Distribution Scan",
+    "batch": "held_out",
+    "filename": "cuad-03_held_out.txt",
+    "labels": {
+      "Governing Law": {
+        "present": true,
+        "value": "Republic of Singapore",
+        "quote": "laws of the Republic of Singapore"
+      },
+      "Termination for Convenience": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Cap on Liability": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Audit Rights": {
+        "present": true,
+        "value": "Semi-annually, 14 business days notice",
+        "quote": "once semi-annually upon 14 business days notice"
+      },
+      "Non-Compete": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Exclusivity": {
+        "present": true,
+        "value": "Exclusive right in Southeast Asia",
+        "quote": "exclusive right to distribute the Hardware Products in Southeast Asia"
+      },
+      "Anti-Assignment": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Renewal Term": {
+        "present": false,
+        "value": "None",
+        "quote": ""
+      },
+      "Expiration Date": {
+        "present": true,
+        "value": "31 December 2027",
+        "quote": "Expires on 31 December 2027"
+      },
+      "Effective Date": {
+        "present": true,
+        "value": "February 10, 2024",
+        "quote": "Date of execution: February 10, 2024"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+MASTER SERVICES AGREEMENT
+Effective Date: January 15, 2024.
+Parties: Northwind Logistics Inc. and Customer.
+
+1. TERM AND EXPIRATION
+This Agreement commences on the Effective Date and shall continue until 31 December 2028 ("Expiration Date").
+Renewal Term: This Agreement shall renew automatically for successive periods of 1 year each, unless either party provides 60 days notice.
+
+2. TERMINATION FOR CONVENIENCE
+Either party may terminate this Agreement without cause upon giving ninety (90) days prior written notice.
+
+3. LIMITATION OF LIABILITY
+In no event shall either party's cumulative aggregate liability under this Agreement exceed the total fees paid by Customer during the prior 12 months preceding the claim.
+
+4. AUDIT RIGHTS
+Customer may audit Northwind's financial and performance records once per calendar year upon thirty (30) days prior written demand.
+
+5. NON-COMPETE AND EXCLUSIVITY
+During the term of this Agreement and for twelve (12) months thereafter, Customer shall not directly solicit Northwind's core freight logistics personnel.
+Northwind is appointed as Customer's exclusive multimodal carrier in the designated region.
+
+6. ANTI-ASSIGNMENT
+Neither party may assign or transfer this Agreement or any rights without prior written consent of the other party.
+
+7. GOVERNING LAW
+This Agreement shall be governed by and construed in accordance with the laws of the State of New York, USA.
