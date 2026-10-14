@@ -1,12 +1,3 @@
-"""
-PDF Text Extraction Engine with Functional Parser Selection
-Supports:
-  - "text": Read embedded text layer only. Fast, exact. Warns if empty.
-  - "ocr": Run OCR (Tesseract / AWS Textract) on each page.
-  - "auto": Try text per page. If empty/garbled, fall back to OCR for that page.
-Includes page_text_ok quality checks that reject raw PDF structural plumbing.
-"""
-
 import io
 import re
 import logging
@@ -22,18 +13,15 @@ PDF_JUNK = re.compile(
 )
 
 def page_text_ok(text: str) -> bool:
-    """Quality check: confirms text contains readable language, not raw PDF plumbing."""
     text = text.strip()
-    if len(text) < 80:  # near empty page
+    if len(text) < 80:
         return False
-    if PDF_JUNK.search(text):  # raw PDF internals leaked in
+    if PDF_JUNK.search(text):
         return False
     letters = sum(c.isalpha() for c in text)
-    return letters / max(len(text), 1) > 0.5  # mostly real characters
+    return letters / max(len(text), 1) > 0.5
 
 def ocr_page_bytes(page_bytes: bytes) -> str:
-    """Run OCR on page bytes using AWS Textract or pytesseract."""
-    # Try AWS Textract first if configured
     try:
         import boto3
         textract = boto3.client("textract")
@@ -48,7 +36,6 @@ def ocr_page_bytes(page_bytes: bytes) -> str:
     except Exception:
         pass
 
-    # Try pytesseract / PIL
     try:
         import pytesseract
         from PIL import Image
@@ -67,7 +54,6 @@ def ocr_fitz_page(page: Any) -> str:
         img = Image.open(io.BytesIO(pix.tobytes("png")))
         return pytesseract.image_to_string(img, lang="eng")
     except Exception:
-        # Fallback to textract using PNG bytes
         try:
             pix = page.get_pixmap(dpi=300)
             return ocr_page_bytes(pix.tobytes("png"))
@@ -89,7 +75,6 @@ def parse_pdf(file_bytes: bytes, mode: Mode = "auto") -> Dict[str, Any]:
     methods: List[str] = []
     warnings: List[str] = []
 
-    # Try PyMuPDF (fitz) if installed
     try:
         import fitz
         doc = fitz.open(stream=file_bytes, filetype="pdf")
@@ -110,7 +95,6 @@ def parse_pdf(file_bytes: bytes, mode: Mode = "auto") -> Dict[str, Any]:
             pages.append(text)
             methods.append(method)
     except ImportError:
-        # Fallback to pdfplumber / pypdf
         try:
             from pypdf import PdfReader
             reader = PdfReader(io.BytesIO(file_bytes))
@@ -129,7 +113,6 @@ def parse_pdf(file_bytes: bytes, mode: Mode = "auto") -> Dict[str, Any]:
 
     full_text = "\n\n".join(pages).strip()
 
-    # In text mode, if output is empty, issue clear warning
     if mode == "text" and not page_text_ok(full_text):
         if not warnings:
             warnings.append("Text mode requested, but document has no extractable text layer (likely a scan).")
@@ -145,7 +128,6 @@ def parse_pdf(file_bytes: bytes, mode: Mode = "auto") -> Dict[str, Any]:
     }
 
 def extract_clean_contract_text(file_bytes: bytes, filename: str = "contract.pdf", mode: Mode = "auto"):
-    """Compatibility wrapper returning clean text and method summary."""
     result = parse_pdf(file_bytes, mode=mode)
     method_summary = ", ".join(f"{count} by {m}" for m, count in result["pages_by_method"].items())
     return result["text"], method_summary
