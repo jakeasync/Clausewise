@@ -33,9 +33,7 @@ export function useReview(docId: string, initial: Record<ClauseKey, ClauseResult
   const confirmReady = async () => {
     try {
       await call("confirm-ready");
-    } catch {
-      // Local optimistic fallback
-    }
+    } catch {}
     setClauses((p) => {
       const updated = { ...p };
       for (const [key, c] of Object.entries(updated) as [ClauseKey, ClauseResult][]) {
