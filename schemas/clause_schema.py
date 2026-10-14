@@ -1,8 +1,3 @@
-"""
-Pydantic v2 Schema for ClauseLens Structured Clause Extraction
-Enforces strict typing and quote grounding verification.
-"""
-
 from typing import Optional, List, Dict
 from pydantic import BaseModel, Field
 
