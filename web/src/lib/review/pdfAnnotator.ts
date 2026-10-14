@@ -3,19 +3,17 @@ import { extractText } from "unpdf";
 import type { ReviewDoc, ClauseKey, ClauseResult } from "./types";
 import { createCoverPage } from "./exportGenerator.ts";
 
-// Normalize text for whitespace-invariant search
 function normalizeForSearch(str: string): string {
   return str.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 export interface LocatedClause {
   clause: ClauseKey;
-  pageIndex: number; // 0-indexed page in original contract (excluding cover)
-  displayPage: number; // 1-indexed page in original contract
+  pageIndex: number;
+  displayPage: number;
   sentence: string;
 }
 
-// Find evidence string across PDF pages using unpdf
 export async function locateEvidencePages(
   pdfBuffer: Buffer,
   doc: ReviewDoc
@@ -52,16 +50,14 @@ export async function locateEvidencePages(
 
       let matchedPage: number | null = null;
 
-      // 1. Check page by page
       for (let pIdx = 0; pIdx < pagesText.length; pIdx++) {
         const pageContent = normalizeForSearch(pagesText[pIdx] || "");
         if (pageContent.includes(needle)) {
-          matchedPage = pIdx + 1; // 1-indexed
+          matchedPage = pIdx + 1;
           break;
         }
       }
 
-      // 2. If not found, check partial first 25 characters in case of line break or hyphenation
       if (!matchedPage && needle.length > 25) {
         const needlePrefix = needle.slice(0, 25);
         for (let pIdx = 0; pIdx < pagesText.length; pIdx++) {
@@ -86,7 +82,6 @@ export async function locateEvidencePages(
   return result;
 }
 
-// Build the Annotated PDF without modifying original contract pages
 export async function buildAnnotatedPdf(
   originalPdfBuffer: Buffer,
   doc: ReviewDoc,
@@ -101,7 +96,6 @@ export async function buildAnnotatedPdf(
   const notReviewedCount = Object.values(doc.clauses).filter(c => c.reviewStatus === "pending").length;
   const unlocatedCount = Object.values(clauseLocations).filter(l => !l.page).length;
 
-  // Insert Page 1 (Cover Page)
   await createCoverPage(
     pdfDoc,
     doc,
@@ -116,8 +110,6 @@ export async function buildAnnotatedPdf(
     exportedWithPending
   );
 
-  // Apply highlight annotations only for qualifying clauses
-  // Qualifying: reviewStatus === 'confirmed' | 'edited' AND modelStatus === 'found' | 'found_blank'
   const qualifyingKeys = (Object.keys(doc.clauses) as ClauseKey[]).filter(k => {
     const c = doc.clauses[k];
     const isQualifyingStatus = c.reviewStatus === "confirmed" || c.reviewStatus === "edited";
@@ -131,22 +123,20 @@ export async function buildAnnotatedPdf(
     const loc = clauseLocations[k];
     if (!loc || !loc.page) continue;
 
-    // Cover page is index 0, so original contract page 1 is index 1
-    const targetPageIndex = loc.page; // 1-indexed matches index after cover insertion
+    const targetPageIndex = loc.page;
     if (targetPageIndex >= totalPages) continue;
 
     const targetPage = pdfDoc.getPage(targetPageIndex);
     const { width, height } = targetPage.getSize();
 
     const c = doc.clauses[k];
-    let highlightColor = rgb(0.2, 0.8, 0.4); // Green for confirmed
+    let highlightColor = rgb(0.2, 0.8, 0.4);
     if (c.reviewStatus === "edited") {
-      highlightColor = rgb(0.95, 0.85, 0.2); // Yellow for edited
+      highlightColor = rgb(0.95, 0.85, 0.2);
     } else if (c.modelStatus === "found_blank") {
-      highlightColor = rgb(0.98, 0.6, 0.2); // Orange for found_blank
+      highlightColor = rgb(0.98, 0.6, 0.2);
     }
 
-    // Draw visual highlight overlay banner in margin and line indicator
     targetPage.drawRectangle({
       x: 15,
       y: height - 45 - (k.length * 6),
