@@ -6,7 +6,7 @@ export interface ClauseItem {
   result: "Found" | "Not found";
   source: string;
   sourceQuote: string;
-  confidence: number; // 0 - 100
+  confidence: number;
   status: "Ready to check" | "Needs review" | "Confirmed" | "Corrected";
   validationCheck: {
     schemaValid: boolean;
