@@ -2,12 +2,10 @@ import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import type { ReviewDoc, ClauseKey, ClauseResult } from "./types";
 import { CLAUSE_NAMES } from "./constants.ts";
 
-// Helper to normalize text for search comparison
 function normalizeText(str: string): string {
   return str.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
-// Generate the Cover Page (Page 1) with clean, spacious, premium layout
 export async function createCoverPage(
   pdfDoc: PDFDocument,
   doc: ReviewDoc,
@@ -18,13 +16,12 @@ export async function createCoverPage(
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-  const page = pdfDoc.insertPage(0, [595.28, 841.89]); // A4: 595 x 842 pt
+  const page = pdfDoc.insertPage(0, [595.28, 841.89]);
   const { width, height } = page.getSize();
   const margin = 45;
   const contentWidth = width - margin * 2;
   let y = height - 48;
 
-  // Title
   page.drawText("Clause Review Summary", {
     x: margin,
     y,
@@ -34,7 +31,6 @@ export async function createCoverPage(
   });
   y -= 26;
 
-  // Metadata block (spaced cleanly)
   page.drawText(`Document: ${doc.filename}`, {
     x: margin,
     y,
@@ -68,7 +64,6 @@ export async function createCoverPage(
   });
   y -= 26;
 
-  // Warning banner if exported with pending clauses
   if (exportedWithPending || counts.notReviewed > 0) {
     page.drawRectangle({
       x: margin,
@@ -89,7 +84,6 @@ export async function createCoverPage(
     y -= 42;
   }
 
-  // Summary counts pill bar
   page.drawRectangle({
     x: margin,
     y: y - 22,
@@ -117,7 +111,6 @@ export async function createCoverPage(
   });
   y -= 42;
 
-  // Table Heading
   page.drawText("Clause Findings", {
     x: margin,
     y,
@@ -127,7 +120,6 @@ export async function createCoverPage(
   });
   y -= 18;
 
-  // Table header bar
   page.drawRectangle({
     x: margin,
     y: y - 16,
@@ -136,13 +128,11 @@ export async function createCoverPage(
     color: rgb(0.92, 0.93, 0.95),
   });
 
-  // Table column positions with generous breathing room
-  // contentWidth = 595.28 - 2*45 = 505.28 pt
-  const colClause = margin + 12;      // width ~125 pt
-  const colStatus = margin + 140;     // width ~95 pt
-  const colValue = margin + 238;      // width ~145 pt
-  const colLoc = margin + 388;        // width ~70 pt
-  const colPage = margin + 462;       // width ~40 pt
+  const colClause = margin + 12;
+  const colStatus = margin + 140;
+  const colValue = margin + 238;
+  const colLoc = margin + 388;
+  const colPage = margin + 462;
 
   page.drawText("CLAUSE", { x: colClause, y: y - 10, size: 8, font: fontBold, color: rgb(0.3, 0.35, 0.4) });
   page.drawText("STATUS", { x: colStatus, y: y - 10, size: 8, font: fontBold, color: rgb(0.3, 0.35, 0.4) });
@@ -151,7 +141,6 @@ export async function createCoverPage(
   page.drawText("PAGE", { x: colPage, y: y - 10, size: 8, font: fontBold, color: rgb(0.3, 0.35, 0.4) });
   y -= 24;
 
-  // Table rows with 28pt height per row
   const allKeys = Object.keys(doc.clauses) as ClauseKey[];
   for (const k of allKeys) {
     const c = doc.clauses[k];
@@ -166,7 +155,6 @@ export async function createCoverPage(
 
     page.drawText(CLAUSE_NAMES[k] || k, { x: colClause, y: y - 8, size: 9, font: fontBold, color: rgb(0.12, 0.12, 0.16) });
     
-    // Status text color: green if confirmed, yellow if edited, amber if found_blank, gray if absent/not reviewed
     const statusColor = (c.reviewStatus === "confirmed" || c.reviewStatus === "confirmed_absent")
       ? rgb(0.1, 0.55, 0.25)
       : c.reviewStatus === "edited"
@@ -188,24 +176,19 @@ export async function createCoverPage(
   }
   y -= 16;
 
-  // Highlight Legend (Spaced cleanly)
   page.drawText("Highlight Legend:", { x: margin, y, size: 9.5, font: fontBold, color: rgb(0.15, 0.15, 0.2) });
   y -= 16;
 
-  // Green
   page.drawRectangle({ x: margin, y: y - 2, width: 12, height: 12, color: rgb(0.72, 0.94, 0.8) });
   page.drawText("Green: Confirmed match", { x: margin + 18, y, size: 8.5, font, color: rgb(0.2, 0.2, 0.25) });
 
-  // Yellow
   page.drawRectangle({ x: margin + 160, y: y - 2, width: 12, height: 12, color: rgb(0.99, 0.96, 0.7) });
   page.drawText("Yellow: Human edited", { x: margin + 178, y, size: 8.5, font, color: rgb(0.2, 0.2, 0.25) });
 
-  // Orange
   page.drawRectangle({ x: margin + 310, y: y - 2, width: 12, height: 12, color: rgb(1.0, 0.88, 0.72) });
   page.drawText("Orange: Found (value blank)", { x: margin + 328, y, size: 8.5, font, color: rgb(0.2, 0.2, 0.25) });
   y -= 30;
 
-  // "Not in this contract" Section
   const absentClauses = allKeys.filter((k) => doc.clauses[k].modelStatus === "not_found" && (doc.clauses[k].reviewStatus === "confirmed_absent" || doc.clauses[k].reviewStatus === "confirmed"));
   if (absentClauses.length > 0) {
     page.drawText("Not in this contract (Confirmed Absent):", { x: margin, y, size: 10, font: fontBold, color: rgb(0.12, 0.12, 0.16) });
@@ -217,7 +200,6 @@ export async function createCoverPage(
     y -= 12;
   }
 
-  // Footer Note
   page.drawText("Highlights point to the original text. The contract itself has not been modified.", {
     x: margin,
     y: 35,
@@ -227,7 +209,6 @@ export async function createCoverPage(
   });
 }
 
-// Generate the Summary Report PDF (Stand-alone Document without full contract pages)
 export async function generateSummaryReportPdf(
   doc: ReviewDoc,
   counts: { confirmed: number; edited: number; confirmedAbsent: number; notReviewed: number; unlocated: number },
@@ -236,7 +217,6 @@ export async function generateSummaryReportPdf(
   const pdfDoc = await PDFDocument.create();
   await createCoverPage(pdfDoc, doc, counts, clauseLocations, counts.notReviewed > 0);
 
-  // Add detailed evidence quotes section
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
@@ -280,13 +260,12 @@ export async function generateSummaryReportPdf(
     }
 
     y -= 10;
-    if (y < 70) break; // Keep cleanly within page margin
+    if (y < 70) break;
   }
 
   return pdfDoc.save();
 }
 
-// Generate CSV string with UTF-8 BOM
 export function generateCsv(doc: ReviewDoc, clauseLocations: Record<ClauseKey, { page: number | null }>): string {
   const BOM = "\uFEFF";
   const headers = ["filename", "clause", "status", "value", "evidence", "location", "page", "confidence", "review_status", "note"];
@@ -321,7 +300,6 @@ export function generateCsv(doc: ReviewDoc, clauseLocations: Record<ClauseKey, {
   return BOM + rows.join("\r\n");
 }
 
-// Generate JSON export payload
 export function generateJsonExport(
   doc: ReviewDoc,
   clauseLocations: Record<ClauseKey, { page: number | null }>,
