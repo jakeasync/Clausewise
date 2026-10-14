@@ -13,16 +13,15 @@ export type ReviewStatus = "pending" | "edited" | "confirmed" | "confirmed_absen
 export interface ClauseResult {
   clause: ClauseKey;
   modelStatus: ModelStatus;
-  modelValues: string[]; // never changed after extraction
-  evidence: string | null; // verbatim quote from the contract
+  modelValues: string[];
+  evidence: string | null;
   location: string | null;
   confidence: number;
   needsReview: boolean;
   note: string | null;
-  grounded: boolean; // set by the validator, not the model
+  grounded: boolean;
   evidenceSpan: { start: number; end: number } | null;
 
-  // human layer
   reviewedValue: string | null;
   reviewStatus: ReviewStatus;
   reviewedAt: string | null;
@@ -32,8 +31,8 @@ export interface ClauseResult {
 export interface ReviewDoc {
   id: string;
   filename: string;
-  textHash: string; // show this in the UI
-  parsedText: string; // read only source of truth
+  textHash: string;
+  parsedText: string;
   clauses: Record<ClauseKey, ClauseResult>;
   pageCount?: number;
 }

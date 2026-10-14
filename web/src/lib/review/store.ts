@@ -1,6 +1,5 @@
 import type { ReviewDoc } from "./types";
 
-// In memory for development. Swap for Postgres/DynamoDB and S3 when deployed to AWS.
 const docs = new Map<string, ReviewDoc>();
 const pdfBuffers = new Map<string, Buffer>();
 
