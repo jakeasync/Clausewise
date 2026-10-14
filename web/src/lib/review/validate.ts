@@ -4,7 +4,6 @@ import type { ClauseKey, ClauseResult } from "./types";
 export const hashText = (t: string) =>
   createHash("sha256").update(t).digest("hex").slice(0, 12);
 
-// Collapse whitespace but keep a map back to original offsets.
 export function normalizeWithMap(text: string) {
   let out = "";
   const map: number[] = [];
@@ -63,7 +62,6 @@ export function groundResult(r: ClauseResult, sourceText: string): ClauseResult 
     return { ...r, grounded: true, evidenceSpan: null };
   }
 
-  // Treat 'found' with no evidence as invalid (always demoted to not_found)
   if (!r.evidence || !r.evidence.trim()) {
     const suggested = r.modelValues.join("; ") || "Clause claimed found without quote";
     return {
@@ -81,7 +79,6 @@ export function groundResult(r: ClauseResult, sourceText: string): ClauseResult 
 
   const span = locateEvidence(sourceText, r.evidence);
   const sn = normalizeWithMap(sourceText).out;
-  // Every returned value must also appear in the source or in the evidence.
   const valuesOk = r.modelValues.every((v) => {
     const n = normalizeWithMap(v).out.trim();
     return !n || sn.includes(n) || normalizeWithMap(r.evidence ?? "").out.includes(n);
