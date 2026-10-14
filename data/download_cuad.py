@@ -1,9 +1,3 @@
-"""
-CUAD Dataset Downloader and Splitter for ClauseLens / Clausewise
-Downloads sample commercial contracts from CUAD (Atticus Project)
-and sets up the 15 tuning contracts and 35 held-out contracts split.
-"""
-
 import os
 import json
 import urllib.request
@@ -26,7 +20,6 @@ TARGET_CLAUSES = [
     "Effective Date"
 ]
 
-# Curated high-fidelity contracts from the CUAD benchmark
 SAMPLE_CUAD_CONTRACTS = [
     {
         "id": "cuad-01",

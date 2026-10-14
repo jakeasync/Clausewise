@@ -1,9 +1,3 @@
-"""
-Scoring and Evaluation Script for ClauseLens / Clausewise
-Calculates Precision, Recall, F1, and Correct Abstention per clause type
-against ground truth labels from the CUAD dataset.
-"""
-
 import os
 import json
 from typing import Dict, List, Any
@@ -48,7 +42,6 @@ def evaluate_predictions(ground_truth: Dict[str, Any], predictions: Dict[str, An
             if is_gt_present:
                 stats[clause_name]["total_present"] += 1
                 if is_pred_present:
-                    # Check substring quote grounding
                     gt_quote = gt_clause.get("quote", "").lower()
                     pred_quote = pred_clause.get("quote", "").lower()
                     if pred_quote and (pred_quote in gt_quote or gt_quote in pred_quote):
@@ -61,9 +54,9 @@ def evaluate_predictions(ground_truth: Dict[str, Any], predictions: Dict[str, An
             else:
                 stats[clause_name]["total_absent"] += 1
                 if is_pred_present:
-                    stats[clause_name]["fp"] += 1  # Hallucinated clause
+                    stats[clause_name]["fp"] += 1
                 else:
-                    stats[clause_name]["tn"] += 1  # Correct abstention
+                    stats[clause_name]["tn"] += 1
 
     print("\n" + "=" * 95)
     print(f"{'Clause Type':<30} | {'Prec (%)':<9} | {'Rec (%)':<9} | {'F1 (%)':<8} | {'Abstention (%)':<15} | {'Samples':<7}")
@@ -95,12 +88,10 @@ if __name__ == "__main__":
         with open(gt_file, "r", encoding="utf-8") as f:
             gt_data = json.load(f)
         
-        # Test evaluation with ground truth baseline
         synthetic_preds = {}
         for cid, val in gt_data.items():
             synthetic_preds[cid] = {"clauses": val["labels"]}
-            
-        print("Running scoring test against CUAD ground truth baseline...")
+
         evaluate_predictions(gt_data, synthetic_preds)
     else:
         print(f"Ground truth file {gt_file} not found. Run python data/download_cuad.py first.")
