@@ -1,4 +1,3 @@
-# ECS Task Execution Role (Pull from ECR, stream CloudWatch logs)
 resource "aws_iam_role" "ecs_execution_role" {
   name = "${var.project_name}-ecs-execution-role-${var.environment}"
 
@@ -17,7 +16,6 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# ECS Task Role (Runtime permissions for Bedrock, Textract, S3, SQS)
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.project_name}-ecs-task-role-${var.environment}"
 
@@ -31,7 +29,6 @@ resource "aws_iam_role" "ecs_task_role" {
   })
 }
 
-# Runtime Policy
 resource "aws_iam_policy" "pipeline_runtime_policy" {
   name        = "${var.project_name}-runtime-policy-${var.environment}"
   description = "Allows ECS worker to access S3, SQS, Bedrock, and Textract"

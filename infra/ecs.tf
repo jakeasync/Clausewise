@@ -1,4 +1,3 @@
-# ECR Repository for Pipeline Container Image
 resource "aws_ecr_repository" "app_repo" {
   name                 = "${var.project_name}-backend"
   image_tag_mutability = "MUTABLE"
@@ -8,18 +7,15 @@ resource "aws_ecr_repository" "app_repo" {
   }
 }
 
-# CloudWatch Log Group
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name              = "/ecs/${var.project_name}-${var.environment}"
   retention_in_days = 30
 }
 
-# ECS Cluster
 resource "aws_ecs_cluster" "main" {
   name = "${var.project_name}-cluster-${var.environment}"
 }
 
-# ECS Task Definition (Runs FastAPI or SQS Worker depending on CMD/MODE env)
 resource "aws_ecs_task_definition" "worker" {
   family                   = "${var.project_name}-worker"
   network_mode             = "awsvpc"
