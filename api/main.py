@@ -1,8 +1,3 @@
-"""
-FastAPI Service for ClauseLens
-Provides REST endpoints for contract ingestion, review queues, and S3/SQS integration.
-"""
-
 import os
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,7 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# In-memory storage for local dev (persisted to S3 in production)
 CONTRACTS_DB = []
 
 @app.post("/extract")
@@ -55,7 +49,6 @@ async def upload_contract(
 ):
     content = await file.read()
     
-    # Extract true contract page text, rejecting raw PDF internals
     if file.filename.lower().endswith(".pdf") or file.content_type == "application/pdf":
         text, method = extract_clean_contract_text(content, name)
     else:
@@ -68,7 +61,6 @@ async def upload_contract(
             detail=f"Could not extract readable text from '{name}'. The document may be a scanned image requiring OCR (Textract)."
         )
 
-    # Run extraction pipeline & Pydantic validation
     extracted = ContractExtractionResult(
         contract_id=f"cnt-{len(CONTRACTS_DB) + 1}",
         contract_name=name,
@@ -92,7 +84,6 @@ async def upload_contract(
         ]
     )
 
-    # Perform quote check
     extracted.verify_grounding(text)
 
     CONTRACTS_DB.append({

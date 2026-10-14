@@ -1,9 +1,3 @@
-"""
-Claude API Extraction Engine for ClauseLens / Clausewise
-Extracts 10 commercial contract clause types using Anthropic Claude
-with source quote grounding and Pydantic validation.
-"""
-
 import os
 import json
 from typing import Dict, Any, Optional
@@ -122,7 +116,6 @@ def extract_contract_clauses(contract_text: str, api_key: Optional[str] = None) 
 
     data = json.loads(response_text)
 
-    # Automated Pipeline Validation: Verify Grounding (Quote Check)
     for clause in data.get("clauses", []):
         quote = clause.get("source_quote", "").strip()
         if clause.get("is_present") and quote:
