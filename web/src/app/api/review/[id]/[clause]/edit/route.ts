@@ -16,7 +16,6 @@ export async function POST(
     return NextResponse.json({ error: "Invalid value" }, { status: 400 });
 
   const c = doc.clauses[clauseKey];
-  // Edits change the reviewed answer only. Model output and source text stay untouched.
   c.reviewedValue = value.trim();
   c.reviewStatus = "edited";
   c.reviewedAt = new Date().toISOString();
