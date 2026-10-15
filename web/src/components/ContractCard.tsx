@@ -61,13 +61,11 @@ export function ContractCard({
 
   return (
     <div className="group">
-      {/* Group Header: Contract Name & Count Pill */}
       <div className="ghead">
         <span>{contract.name}</span>
         <span className="count">{filteredClauses.length}</span>
       </div>
 
-      {/* Sheet Table */}
       <div className="sheet">
         <table>
           <thead>
@@ -92,15 +90,12 @@ export function ContractCard({
                   onClick={() => onSelectClause(clause, contract)}
                   className={isSelected ? "sel" : ""}
                 >
-                  {/* Clause Name */}
                   <td>{clause.clauseType}</td>
 
-                  {/* Extracted Value */}
                   <td>
                     <div className="val">{clause.extractedValue}</div>
                   </td>
 
-                  {/* Result Chip */}
                   <td>
                     <span className="chip c-gray">
                       {isFound ? (
@@ -116,10 +111,8 @@ export function ContractCard({
                     </span>
                   </td>
 
-                  {/* Source */}
                   <td>{clause.source}</td>
 
-                  {/* Confidence Meter */}
                   <td>
                     <div className="conf">
                       <span className="pct">{Math.round(clause.confidence)}%</span>
@@ -134,7 +127,6 @@ export function ContractCard({
                     </div>
                   </td>
 
-                  {/* Status Badge */}
                   <td>
                     <span className={`chip ${chipClass}`}>{label}</span>
                   </td>
