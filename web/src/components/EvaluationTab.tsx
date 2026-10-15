@@ -16,7 +16,6 @@ import {
 export function EvaluationTab() {
   const [selectedParser, setSelectedParser] = useState(0);
 
-  // Compute aggregate metrics
   const avgPrecision = (
     EVALUATION_METRICS.reduce((acc, m) => acc + m.precision, 0) /
     EVALUATION_METRICS.length
@@ -43,7 +42,6 @@ export function EvaluationTab() {
         <h2>Evaluation</h2>
       </div>
 
-      {/* Top Summary Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "16px" }}>
         <div style={{ background: "var(--soft)", padding: "14px 16px", borderRadius: "10px", border: "1px solid var(--line)" }}>
           <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>
@@ -86,7 +84,6 @@ export function EvaluationTab() {
         </div>
       </div>
 
-      {/* Per Clause Evaluation Table */}
       <div className="sheet">
         <table className="eval">
           <thead>
