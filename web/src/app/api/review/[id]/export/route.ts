@@ -18,7 +18,6 @@ export async function POST(
       return NextResponse.json({ error: "Document not found in review store." }, { status: 404 });
     }
 
-    // Merge latest client-side reviews if provided
     if (clientClauses && typeof clientClauses === "object") {
       doc = {
         ...doc,
@@ -30,7 +29,6 @@ export async function POST(
       saveDoc(doc);
     }
 
-    // Guard: Validate textHash matches parsedText hash
     const currentHash = hashText(doc.parsedText);
     if (doc.textHash !== currentHash) {
       return NextResponse.json(
@@ -43,7 +41,6 @@ export async function POST(
     const dateStr = new Date().toISOString().slice(0, 10);
     const pdfBuffer = getPdfBuffer(id);
 
-    // Locate evidence pages in PDF
     const clauseLocations = pdfBuffer
       ? await locateEvidencePages(pdfBuffer, doc)
       : (Object.fromEntries(
