@@ -93,7 +93,6 @@ export function ClauseDetailDrawer({
 
   return (
     <aside className="drawer open" aria-label="Clause details">
-      {/* Drawer Header */}
       <div className="dh">
         <div>
           <h3 id="dt">{clause.clauseType}</h3>
@@ -106,7 +105,6 @@ export function ClauseDetailDrawer({
         </button>
       </div>
 
-      {/* Drawer Body */}
       <div className="db" id="dbody">
         {clause.notes && clause.status === "Needs review" && (
           <div className="warn">{clause.notes}</div>
@@ -125,7 +123,6 @@ export function ClauseDetailDrawer({
         />
       </div>
 
-      {/* Drawer Footer */}
       <div className="df" id="dfoot">
         <button className="btn" id="sv" onClick={handleSave} type="button">
           Save changes
