@@ -27,8 +27,6 @@ export function CommandPalette({
         e.preventDefault();
         if (isOpen) {
           onClose();
-        } else {
-          // Trigger open in parent
         }
       }
       if (e.key === "Escape" && isOpen) {
@@ -41,7 +39,6 @@ export function CommandPalette({
 
   if (!isOpen) return null;
 
-  // Search results
   const matchingClauses: { clause: ClauseItem; contract: Contract }[] = [];
   contracts.forEach((c) => {
     c.clauses.forEach((cl) => {
