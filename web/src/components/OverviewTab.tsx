@@ -38,7 +38,6 @@ export function OverviewTab({ contracts, onNavigateTab, onOpenUpload }: Overview
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }} className="animate-fade-in">
-      {/* Hero Welcome Banner */}
       <div
         style={{
           background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
@@ -102,7 +101,6 @@ export function OverviewTab({ contracts, onNavigateTab, onOpenUpload }: Overview
         </div>
       </div>
 
-      {/* KPI Cards Grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
         <div
           style={{
@@ -189,7 +187,6 @@ export function OverviewTab({ contracts, onNavigateTab, onOpenUpload }: Overview
         </div>
       </div>
 
-      {/* Visual Pipeline Architecture Workflow */}
       <div
         style={{
           backgroundColor: "#ffffff",
@@ -279,9 +276,7 @@ export function OverviewTab({ contracts, onNavigateTab, onOpenUpload }: Overview
         </div>
       </div>
 
-      {/* Two-column layout: Active Contracts & Quick Shortcuts */}
       <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "16px" }}>
-        {/* Active Contracts Summary */}
         <div
           style={{
             backgroundColor: "#ffffff",
@@ -358,9 +353,7 @@ export function OverviewTab({ contracts, onNavigateTab, onOpenUpload }: Overview
           </div>
         </div>
 
-        {/* Quick Actions & System Health */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          {/* Action shortcuts */}
           <div
             style={{
               backgroundColor: "#ffffff",
@@ -449,7 +442,6 @@ export function OverviewTab({ contracts, onNavigateTab, onOpenUpload }: Overview
             </div>
           </div>
 
-          {/* Model & System Specs */}
           <div
             style={{
               backgroundColor: "#ffffff",
