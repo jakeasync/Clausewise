@@ -46,7 +46,6 @@ export function ExportModal({ isOpen, onClose, contracts }: ExportModalProps) {
       mimeType = "application/json";
       filename = `clauselens_results_${Date.now()}.json`;
     } else {
-      // CSV format
       const headers = [
         "Contract Name",
         "Batch",
