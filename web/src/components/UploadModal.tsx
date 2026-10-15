@@ -66,7 +66,6 @@ Customer shall not hire Global Cloud developers for 12 months following terminat
 6. GOVERNING LAW
 Governed by and construed under the laws of the State of Delaware, USA.`;
 
-    // If API key is provided, try calling the live Claude endpoint!
     if (apiKey.trim()) {
       setProcessStep("Calling Anthropic Claude 3.5 Sonnet for structured extraction...");
       try {
@@ -109,7 +108,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
       }
     }
 
-    // Fallback pipeline simulation
     const steps = [
       "1/4 Ingesting document and text layers...",
       "2/4 Parsing 10 target commercial clauses...",
@@ -188,7 +186,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
         className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border border-[#e2e8f0] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="px-6 py-4 border-b border-[#edf2f7] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -208,9 +205,7 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleUploadSubmit} className="p-6 space-y-4">
-          {/* File input */}
           <label className="block border-2 border-dashed border-[#cbd5e1] hover:border-blue-500 rounded-xl p-5 text-center transition-colors cursor-pointer bg-slate-50/50">
             <input
               type="file"
@@ -227,7 +222,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
             </div>
           </label>
 
-          {/* Contract Name */}
           <div>
             <label className="block text-xs font-semibold text-[#0f172a] mb-1">
               Contract Title / Reference
@@ -243,7 +237,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
             />
           </div>
 
-          {/* Optional Claude API Key */}
           <div>
             <label className="block text-xs font-semibold text-[#0f172a] mb-1 flex items-center gap-1.5">
               <Key className="w-3.5 h-3.5 text-blue-600" />
@@ -262,7 +255,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
             </span>
           </div>
 
-          {/* Batch Selector */}
           <div>
             <label className="block text-xs font-semibold text-[#0f172a] mb-1">
               Evaluation Batch
@@ -279,7 +271,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
             </select>
           </div>
 
-          {/* Error / Progress */}
           {errorMsg && (
             <div className="p-2.5 bg-amber-50 border border-amber-200 text-amber-900 rounded-lg text-xs">
               {errorMsg}
@@ -298,7 +289,6 @@ Governed by and construed under the laws of the State of Delaware, USA.`;
             </div>
           )}
 
-          {/* Buttons */}
           <div className="pt-2 flex items-center justify-end gap-2">
             <button
               type="button"
