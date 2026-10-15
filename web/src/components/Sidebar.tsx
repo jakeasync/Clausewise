@@ -35,7 +35,6 @@ export function Sidebar({
 
   return (
     <aside className="side">
-      {/* Workspace Branding */}
       <div className="ws">
         <div className="logo">C</div>
         <div>
@@ -44,7 +43,6 @@ export function Sidebar({
         </div>
       </div>
 
-      {/* Search box button */}
       <button className="sbox" onClick={onOpenSearch} type="button">
         <svg className="i" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3" />
@@ -53,7 +51,6 @@ export function Sidebar({
         <span>Ctrl K</span>
       </button>
 
-      {/* Workspace Nav */}
       <nav aria-label="Main">
         <p className="grp">Workspace</p>
         <button
@@ -128,7 +125,6 @@ export function Sidebar({
         </button>
       </nav>
 
-      {/* Batches Nav */}
       <nav aria-label="Batches">
         <p className="grp">Batches</p>
         {batches.map((batch) => {
