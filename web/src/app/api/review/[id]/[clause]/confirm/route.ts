@@ -19,7 +19,6 @@ export async function POST(
       { status: 409 }
     );
 
-  // "Confirm" on a no match row means a human checked and the clause is absent.
   c.reviewStatus = c.modelStatus === "not_found" ? "confirmed_absent" : "confirmed";
   c.reviewedAt = new Date().toISOString();
   saveDoc(doc);
