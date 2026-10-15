@@ -108,7 +108,6 @@ async function extractTextFromPDF(buffer: Buffer): Promise<{ text: string; pageC
     console.warn("unpdf text extraction error:", err);
   }
 
-  // Fallback: extract text operators from raw PDF streams
   const rawStr = buffer.toString("latin1");
   const textMatches: string[] = [];
   const textOperatorRegex = /\(([^)]{2,})\)\s*(?:Tj|'|")|\[([^\]]{2,})\]\s*TJ/g;
@@ -166,7 +165,6 @@ export async function POST(req: Request) {
         }
       } else {
         parsedText = buffer.toString("utf-8");
-        // Simple page count heuristic for text: every ~50 lines or form-feed
         detectedPageCount = Math.max(1, (parsedText.match(/\f/g) || []).length + 1);
       }
       (req as any).detectedPageCount = detectedPageCount;
@@ -176,7 +174,6 @@ export async function POST(req: Request) {
       if (body.filename) filename = body.filename;
     }
 
-    // Clean text and check validity
     const cleanText = parsedText.trim();
     if (!cleanText || cleanText.length < 20) {
       return NextResponse.json(
@@ -187,7 +184,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check for raw PDF internal stream leaks
     if (/(StructTreeRoot|FontDescriptor|DescendantFonts|endobj\s+xref)/i.test(cleanText.slice(0, 500))) {
       return NextResponse.json(
         {
@@ -207,7 +203,6 @@ export async function POST(req: Request) {
 
     const anthropic = new Anthropic({ apiKey });
 
-    // Call Claude Haiku 4.5
     const message = await anthropic.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 3500,
@@ -225,7 +220,6 @@ export async function POST(req: Request) {
       rawOutput = message.content[0].text.trim();
     }
 
-    // Strip markdown code fences if present
     if (rawOutput.startsWith("```json")) {
       rawOutput = rawOutput.slice(7);
     } else if (rawOutput.startsWith("```")) {
@@ -249,7 +243,6 @@ export async function POST(req: Request) {
 
     const rawClauses = modelResultJson.clauses || {};
 
-    // Transform model output into typed ClauseResults and ground each clause against real parsed text
     const groundedClauses: Partial<Record<ClauseKey, ClauseResult>> = {};
 
     for (const key of CLAUSE_KEYS) {
@@ -257,7 +250,6 @@ export async function POST(req: Request) {
       const status = rawClause.status === "found" || rawClause.status === "found_blank" ? rawClause.status : "not_found";
       const values = Array.isArray(rawClause.values) ? rawClause.values.map(String) : [];
       const conf = typeof rawClause.confidence === "number" ? rawClause.confidence : 0.8;
-      // Confidence below 0.7 must not be bulk-confirmed and always flagged for review
       const needsReview = Boolean(rawClause.needs_review || status === "found_blank" || conf < 0.70);
 
       const initialResult: ClauseResult = {
@@ -277,7 +269,6 @@ export async function POST(req: Request) {
       };
 
       const grounded = groundResult(initialResult, cleanText);
-      // Run keyword gates per clause. Demotes near-misses lacking required terminology to not_found.
       groundedClauses[key] = applyGate(grounded);
     }
 
@@ -292,7 +283,6 @@ export async function POST(req: Request) {
       pageCount: finalPageCount,
     };
 
-    // Save in server store
     saveDoc(reviewDoc);
     if ((req as any).uploadedPdfBuffer) {
       savePdfBuffer(docId, (req as any).uploadedPdfBuffer);
