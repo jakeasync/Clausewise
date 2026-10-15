@@ -11,7 +11,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   for (const c of Object.values(doc.clauses)) {
     const ready =
       c.reviewStatus === "pending" &&
-      c.modelStatus === "found" && // not found_blank, not not_found
+      c.modelStatus === "found" &&
       c.grounded &&
       !c.needsReview &&
       c.confidence >= 0.85;
